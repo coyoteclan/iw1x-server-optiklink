@@ -1,4 +1,4 @@
-name: Default Build
+name: Optiklink Build
 
 on:
   workflow_dispatch:
