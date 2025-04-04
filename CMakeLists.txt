@@ -101,7 +101,7 @@ add_library(iw1x SHARED ${SOURCES})
 
 # Output properties
 set_target_properties(iw1x PROPERTIES
-    OUTPUT_NAME "iw1x"
+    OUTPUT_NAME "libcod1" # make it libcod1 for now instead of iw1x
     PREFIX ""
     SUFFIX ".so"
     LIBRARY_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin"
