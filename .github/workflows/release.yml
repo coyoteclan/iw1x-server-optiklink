@@ -113,6 +113,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: build/iw1x.so
+          asset_path: bin/iw1x.so
           asset_name: iw1x.so
           asset_content_type: application/octet-stream
