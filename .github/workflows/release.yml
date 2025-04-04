@@ -102,6 +102,9 @@ jobs:
           release_name: ${{ env.datetime }}
           tag_name: ${{ env.tag_name }}
           body: Automated release
+      
+      - name: Debug Build Output
+        run: ls -l build
 
       - name: Upload Release Asset
         id: upload-release-asset 
