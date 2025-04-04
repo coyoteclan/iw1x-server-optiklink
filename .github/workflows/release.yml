@@ -102,18 +102,18 @@ jobs:
         id: generate_tag
         run: echo "tag_name=release-$(date -u +"%Y%m%d%H%M%S")" >> $GITHUB_ENV
       
-      - name: Delete Latest Release
-        run: |
-          cd $GITHUB_WORKSPACE
-          latest_tag=$(gh release list --limit 1 --json tagName --jq '.[0].tagName')
-          if [ -n "$latest_tag" ]; then
-            echo "Deleting release with tag: $latest_tag"
-            gh release delete "$latest_tag" -y
-          else
-            echo "No previous release found."
-          fi
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #- name: Delete Latest Release
+      #  run: |
+      #    cd $GITHUB_WORKSPACE
+      #    latest_tag=$(gh release list --limit 1 --json tagName --jq '.[0].tagName')
+      #    if [ -n "$latest_tag" ]; then
+      #      echo "Deleting release with tag: $latest_tag"
+      #      gh release delete "$latest_tag" -y
+      #    else
+      #      echo "No previous release found."
+      #    fi
+      #  env:
+      #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create Release
         id: create_release
