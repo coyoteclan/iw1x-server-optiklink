@@ -72,7 +72,7 @@ jobs:
           apt-get update
 
           # Required for building
-          apt-get install -y g++-multilib cmake libsqlite3-dev:i386 libcurl4-openssl-dev:i386 libssl-dev:i386
+          apt-get install -y g++-multilib cmake gh libsqlite3-dev:i386 libcurl4-openssl-dev:i386 libssl-dev:i386
 
       - name: Configure Build
         run: |
@@ -92,6 +92,19 @@ jobs:
       - name: Generate Tag Name
         id: generate_tag
         run: echo "tag_name=release-$(date -u +"%Y%m%d%H%M%S")" >> $GITHUB_ENV
+      
+      - name: Delete Latest Release
+        run: |
+          # Fetch the latest release tag
+          latest_tag=$(gh release list --limit 1 --json tagName --jq '.[0].tagName')
+          if [ -n "$latest_tag" ]; then
+            echo "Deleting release with tag: $latest_tag"
+            gh release delete "$latest_tag" -y
+          else
+            echo "No previous release found."
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create Release
         id: create_release
