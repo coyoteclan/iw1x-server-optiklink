@@ -51,6 +51,8 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    container:
+        image: debian:buster
 
     env:
       BDEBUG: ${{ inputs.debug || 'OFF' }}
