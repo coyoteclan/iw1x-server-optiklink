@@ -71,7 +71,7 @@ jobs:
           dpkg --add-architecture i386
           apt-get update
           apt-get install -y wget
-          
+
           mkdir -p -m 755 /etc/apt/keyrings
           out=$(mktemp) && wget -nv -O$out https://cli.github.com/packages/githubcli-archive-keyring.gpg
           cat $out | tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null
@@ -104,7 +104,7 @@ jobs:
       
       - name: Delete Latest Release
         run: |
-          # Fetch the latest release tag
+          cd $GITHUB_WORKSPACE
           latest_tag=$(gh release list --limit 1 --json tagName --jq '.[0].tagName')
           if [ -n "$latest_tag" ]; then
             echo "Deleting release with tag: $latest_tag"
