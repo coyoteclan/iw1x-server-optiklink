@@ -69,6 +69,8 @@ jobs:
         run: |
           # Add i386 architecture so that 32-bit packages can be installed
           dpkg --add-architecture i386
+          apt-get update
+          apt-get install -y wget
           
           mkdir -p -m 755 /etc/apt/keyrings
           out=$(mktemp) && wget -nv -O$out https://cli.github.com/packages/githubcli-archive-keyring.gpg
