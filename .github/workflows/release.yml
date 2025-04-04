@@ -87,8 +87,10 @@ jobs:
         id: get_datetime
         run: echo "datetime=$(date -u +"%Y-%m-%dT%H:%M:%SZ")" >> $GITHUB_ENV
 
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - name: Generate Tag Name
+        id: generate_tag
+        run: echo "tag_name=release-$(date -u +"%Y%m%d%H%M%S")" >> $GITHUB_ENV
+
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -98,7 +100,7 @@ jobs:
           draft: false
           prerelease: false
           release_name: ${{ env.datetime }}
-          tag_name: ${{ github.ref }}
+          tag_name: ${{ env.tag_name }}
           body: Automated release
 
       - name: Upload Release Asset
@@ -107,7 +109,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: build/iw1x.so
           asset_name: iw1x.so
           asset_content_type: application/octet-stream
