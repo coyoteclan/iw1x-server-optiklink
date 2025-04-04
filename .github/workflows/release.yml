@@ -124,7 +124,14 @@ jobs:
           prerelease: false
           release_name: ${{ env.datetime }}
           tag_name: ${{ env.tag_name }}
-          body: Automated release
+          body: |
+            Automated release
+            Options:
+            - Debug: ${{ inputs.debug }}
+            - Unsafe: ${{ inputs.unsafe }}
+            - SQLite: ${{ inputs.sqlite }}
+            - cURL: ${{ inputs.curl }}
+            - SSL: ${{ inputs.ssl }}
       
       - name: Debug Build Output
         run: ls -l build
