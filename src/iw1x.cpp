@@ -3363,10 +3363,12 @@ void *custom_Sys_LoadDll(const char *name, char *fqpath, int (**entryPoint)(int,
     hook_jmp((int)dlsym(libHandle, "_init") + 0x88C4, (int)custom_PM_CrashLand);
 #endif
     // FIXME: Something below causes (stock) bounce smoothness issue
-    /*//// Air jumping
+    //// Air jumping
+#if AIRJUMPS == 1
     hook_PM_AirMove = new cHook((int)dlsym(libHandle, "_init") + 0x7B98, (int)custom_PM_AirMove);
     hook_PM_AirMove->hook();
-    hook_PM_CrashLand = new cHook((int)dlsym(libHandle, "_init") + 0x88C4, (int)custom_PM_CrashLand);
+#endif
+    /*hook_PM_CrashLand = new cHook((int)dlsym(libHandle, "_init") + 0x88C4, (int)custom_PM_CrashLand);
     hook_PM_CrashLand->hook();
     // TODO: Ignore the JLE only for players allowed to air jump
     int addr_Jump_Check_JLE = (int)dlsym(libHandle, "BG_PlayerTouchesItem") + 0x7FD; // if (pm->cmd.serverTime - pm->ps->jumpTime <= 499)
