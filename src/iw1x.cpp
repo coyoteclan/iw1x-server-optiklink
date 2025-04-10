@@ -349,6 +349,7 @@ void custom_Com_Init(char *commandLine)
     // Register
     Cvar_Get("iw1x", "1", CVAR_SERVERINFO | CVAR_ROM);
     Cvar_Get("iw1x_date", __DATE__, CVAR_SERVERINFO | CVAR_ROM);
+    Cvar_Get("iw1x_version", "Kazam's fork", CVAR_SERVERINFO | CVAR_ROM);
     Cvar_Get("sv_wwwBaseURL", "", CVAR_ARCHIVE | CVAR_SYSTEMINFO);
     Cvar_Get("sv_wwwDownload", "0", CVAR_ARCHIVE | CVAR_SYSTEMINFO);
 
