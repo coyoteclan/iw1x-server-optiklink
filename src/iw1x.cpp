@@ -2737,7 +2737,7 @@ int PM_ClampFallDamage(int val, int min, int max)
 #endif
 void custom_PM_CrashLand()
 {
-    printf("##### custom_PM_CrashLand\n");
+    //Com_DPrintf("##### custom_PM_CrashLand\n");
 #if 0
     int dmg;
     int hardDmg;
