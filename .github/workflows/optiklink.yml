@@ -83,6 +83,7 @@ jobs:
 
           # Required for building
           #apt-get install -y g++-multilib cmake libsqlite3-dev:i386 libcurl4-openssl-dev:i386 libssl-dev:i386
+          apt install cmake
       
       - name: Cache Dependencies
         uses: awalsh128/cache-apt-pkgs-action@latest
