@@ -187,6 +187,7 @@ cHook *hook_Com_Init;
 cHook *hook_DeathmatchScoreboardMessage;
 cHook *hook_GScr_LoadGameTypeScript;
 cHook *hook_PM_AirMove;
+cHook *hook_PM_CrashLand;
 cHook *hook_PM_FlyMove;
 cHook *hook_PmoveSingle;
 cHook *hook_SV_AddOperatorCommands;
