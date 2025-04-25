@@ -2709,7 +2709,7 @@ void hook_PM_StepSlideMove_PM_ClipVelocity(const float *in, const float *normal,
 Attempt to rewrite PM_CrashLand to make a callback with damage value
 And why not also try to fix acceleration issue related to gravity
 */
-#if 0
+#if 1
 int PM_GroundSurfaceType(pml_t *pml)
 {
     if ((pml->groundTrace.surfaceFlags & 0x20) != 0)
@@ -2738,7 +2738,7 @@ int PM_ClampFallDamage(int val, int min, int max)
 void custom_PM_CrashLand()
 {
     printf("##### custom_PM_CrashLand\n");
-#if 0
+#if 1
     int dmg;
     int hardDmg;
     int lightDmg;
