@@ -38,7 +38,7 @@ cvar_t *g_deadChat;
 cvar_t *g_debugCallbacks;
 cvar_t *g_playerEject;
 cvar_t *g_resetSlide;
-cvar_t *jump_bounceEnable;
+//cvar_t *jump_bounceEnable;
 cvar_t *jump_height;
 cvar_t *sv_botHook;
 cvar_t *sv_connectMessage;
@@ -362,7 +362,7 @@ void custom_Com_Init(char *commandLine)
     g_debugCallbacks = Cvar_Get("g_debugCallbacks", "0", CVAR_ARCHIVE);
     g_playerEject = Cvar_Get("g_playerEject", "1", CVAR_ARCHIVE);
     g_resetSlide = Cvar_Get("g_resetSlide", "0", CVAR_ARCHIVE);
-    jump_bounceEnable = Cvar_Get("jump_bounceEnable", "0", CVAR_ARCHIVE | CVAR_SYSTEMINFO);
+    //jump_bounceEnable = Cvar_Get("jump_bounceEnable", "0", CVAR_ARCHIVE | CVAR_SYSTEMINFO);
     jump_height = Cvar_Get("jump_height", "39.0", CVAR_ARCHIVE);
     player_sprint = Cvar_Get("player_sprint", "0", CVAR_ARCHIVE);
     player_sprintMinTime = Cvar_Get("player_sprintMinTime", "1.0", CVAR_ARCHIVE);
@@ -1370,16 +1370,16 @@ void custom_SV_SendClientGameState(client_t *client)
                     }
                 }
 
-                if (clientUsing1_1x)
+                /*if (clientUsing1_1x)
                 {
-                    /*
+                    /
                     1.1x bounce support
                     See https://github.com/xtnded/codextended-client/blob/45af251518a390ab08b1c8713a6a1544b70114a1/cgame.cpp#L454
-                    */
+                    /
                     size_t pos = csCopy.find(jump_bounceEnable->name);
                     if (pos != std::string::npos)
                         csCopy.replace(pos, strlen(jump_bounceEnable->name), "x_cl_bounce");
-                }
+                }//*/
             }
 
             MSG_WriteBigString(&msg, csCopy.c_str());
@@ -1425,13 +1425,13 @@ void hook_SV_SetConfigstring_SV_SendServerCommand_cs(client_t *cl, int type, con
 
     std::string command((char*)message);
     
-    if (*Info_ValueForKey(cl->userinfo, "xtndedbuild"))
+    /*if (*Info_ValueForKey(cl->userinfo, "xtndedbuild"))
     {
         // 1.1x bounce support
         size_t pos = command.find(jump_bounceEnable->name);
         if (pos != std::string::npos)
             command.replace(pos, strlen(jump_bounceEnable->name), "x_cl_bounce");
-    }
+    }*/
     
     return SV_SendServerCommand(cl, type, command.c_str());
 }
@@ -2628,6 +2628,8 @@ void custom_PM_AirMove()
     {
         // Player is allowed to jump, enable overrideJumpHeight_air
         customPlayerState[clientNum].overrideJumpHeight_air = true;
+        Com_DPrintf("########### jump_height: %f\n", jump_height);
+        Com_DPrintf("########### airjump_heightScale: %f\n", airjump_heightScale);
         customPlayerState[clientNum].jumpHeight = jump_height->value * airjump_heightScale->value;
         
         if (Jump_Check())
@@ -2651,7 +2653,7 @@ void custom_PM_AirMove()
 }
 
 // See https://github.com/voron00/CoD2rev_Server/blob/b012c4b45a25f7f80dc3f9044fe9ead6463cb5c6/src/bgame/bg_pmove.cpp#L1273
-void PM_ProjectVelocity(const float *velIn, const float *normal, float *velOut)
+/*void PM_ProjectVelocity(const float *velIn, const float *normal, float *velOut)
 {
     float lengthSq2D;
     float adjusted;
@@ -2679,15 +2681,15 @@ void PM_ProjectVelocity(const float *velIn, const float *normal, float *velOut)
             velOut[2] = lengthScale * newZ;
         }
     }
-}
+}*/
 
-void hook_PM_StepSlideMove_PM_ClipVelocity(const float *in, const float *normal, float *out, float overbounce)
+/*void hook_PM_StepSlideMove_PM_ClipVelocity(const float *in, const float *normal, float *out, float overbounce)
 {
     if(jump_bounceEnable->integer)
         PM_ProjectVelocity(in, normal, out);
     else
         PM_ClipVelocity(in, normal, out, overbounce);
-}
+}//*/
 
 
 
@@ -2906,7 +2908,7 @@ void custom_PM_CrashLand()
     
 
 
-    /*int clientNum = (*pm)->ps->clientNum;
+    int clientNum = (*pm)->ps->clientNum;
     if (customPlayerState[clientNum].overrideJumpHeight_air)
     {
         // Player landed an airjump, disable overrideJumpHeight_air
@@ -2918,7 +2920,7 @@ void custom_PM_CrashLand()
         gentity_t *gentity = &g_entities[(*pm)->ps->clientNum];
         short ret = Scr_ExecEntThread(gentity, codecallback_playercrashland, 0);
         Scr_FreeThread(ret);
-    }*/
+    }//*/
 }
 #endif
 ////
@@ -3354,10 +3356,10 @@ void *custom_Sys_LoadDll(const char *name, char *fqpath, int (**entryPoint)(int,
     hook_PmoveSingle->hook();
 
     //// Jump height override
-    /*hook_jmp((int)dlsym(libHandle, "BG_PlayerTouchesItem") + 0x88C, (int)hook_Jump_Check_Naked);
+    hook_jmp((int)dlsym(libHandle, "BG_PlayerTouchesItem") + 0x88C, (int)hook_Jump_Check_Naked);
     resume_addr_Jump_Check = (uintptr_t)dlsym(libHandle, "BG_PlayerTouchesItem") + 0x892;
     hook_jmp((int)dlsym(libHandle, "BG_PlayerTouchesItem") + 0x899, (int)hook_Jump_Check_Naked_2);
-    resume_addr_Jump_Check_2 = (uintptr_t)dlsym(libHandle, "BG_PlayerTouchesItem") + 0x8A4;*/
+    resume_addr_Jump_Check_2 = (uintptr_t)dlsym(libHandle, "BG_PlayerTouchesItem") + 0x8A4;//*/
     ////
 
 #if 0
@@ -3378,7 +3380,7 @@ void *custom_Sys_LoadDll(const char *name, char *fqpath, int (**entryPoint)(int,
     
     hook_call((int)dlsym(libHandle, "vmMain") + 0xB0, (int)hook_ClientCommand);
     hook_call((int)dlsym(libHandle, "ClientEndFrame") + 0x311, (int)hook_StuckInClient);
-    hook_call((int)dlsym(libHandle, "_init") + 0xDF22, (int)hook_PM_StepSlideMove_PM_ClipVelocity);
+    //hook_call((int)dlsym(libHandle, "_init") + 0xDF22, (int)hook_PM_StepSlideMove_PM_ClipVelocity);
 
     hook_jmp((int)dlsym(libHandle, "G_LocalizedStringIndex"), (int)custom_G_LocalizedStringIndex);
     hook_jmp((int)dlsym(libHandle, "va"), (int)custom_va);
