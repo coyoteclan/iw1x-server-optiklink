@@ -2916,6 +2916,12 @@ void custom_PM_CrashLand()
         customPlayerState[clientNum].overrideJumpHeight_air = false;
     }
 #endif
+
+    hook_PM_CrashLand->unhook();
+    void (*PM_CrashLand)();
+    *(int*)&PM_CrashLand = hook_PM_CrashLand->from;
+    PM_CrashLand();
+    hook_PM_CrashLand->hook();
     
     /*if (codecallback_playercrashland)
     {
