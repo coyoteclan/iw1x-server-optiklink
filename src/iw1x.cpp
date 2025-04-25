@@ -2733,10 +2733,11 @@ int PM_ClampFallDamage(int val, int min, int max)
     x = PM_ClampFallDamageMax(val - max, max, val);
     return PM_ClampFallDamageMax(min - val, min, x);
 }
+#endif
 void custom_PM_CrashLand()
 {
     printf("##### custom_PM_CrashLand\n")
-
+#if 0
     int dmg;
     int hardDmg;
     int lightDmg;
@@ -2903,6 +2904,7 @@ void custom_PM_CrashLand()
             }
         }
     }
+#endif
     
 
 #if AIRJUMPS
@@ -2921,7 +2923,6 @@ void custom_PM_CrashLand()
         Scr_FreeThread(ret);
     }*/
 }
-#endif
 ////
 
 
