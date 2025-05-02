@@ -2495,6 +2495,16 @@ void hook_ClientCommand(int clientNum)
     // [glitch patch] follow while alive
     if(!strcmp(cmd, "follownext") || !strcmp(cmd, "followprev")) // Not checking if alive, client doesn't call these commands when clicking as spectator
         return;
+    
+    if(!strcmp(cmd, "say") || !strcmp(cmd, "say_team"))
+    {
+        printf("Mute: %d\n", customPlayerState[clientNum].mute);
+        if(customPlayerState[clientNum].mute)
+        {
+            printf("Player is mute\n");
+            return;
+        }
+    }
 
     if (!codecallback_playercommand)
     {
